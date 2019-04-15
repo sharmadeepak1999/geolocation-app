@@ -13,9 +13,14 @@
 		};
 
 		async function success(pos) {
-		  var crd = pos.coords;
-
-		  document.querySelector("#location").textContent = `Latitude : ${crd.latitude} Longitude: ${crd.longitude} More or less ${crd.accuracy} meters.`
+			var xhttp = new XMLHttpRequest();
+			xhttp.onreadystatechange = function() {
+				if (this.readyState == 4 && this.status == 200) {
+					document.getElementById("location").innerHTML = JSON.parse(this.responseText).results[0].formatted_address;
+				}
+			};
+			xhttp.open("POST", `https://maps.googleapis.com/maps/api/geocode/json?latlng=${pos.coords.latitude},${pos.coords.longitude}&sensor=true&key=AIzaSyACjEFG5Hufa0S1NlDL1IH0bphLn334Ciw`, true);
+			xhttp.send();
 		}
 
 		function error(err) {
