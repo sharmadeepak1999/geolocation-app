@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Geolocation</title>
+</head>
+<body>
+	<h1 id="location"></h1>
+	<script type="text/javascript">
+		var options = {
+		  enableHighAccuracy: true,
+		  timeout: 5000,
+		  maximumAge: 0
+		};
+
+		async function success(pos) {
+		  var crd = pos.coords;
+
+		  document.querySelector("#location").textContent = `Latitude : ${crd.latitude} Longitude: ${crd.longitude} More or less ${crd.accuracy} meters.`
+		}
+
+		function error(err) {
+		  console.warn(`ERROR(${err.code}): ${err.message}`);
+		}
+
+		navigator.geolocation.getCurrentPosition(success, error, options);
+	</script>
+</body>
+</html>
